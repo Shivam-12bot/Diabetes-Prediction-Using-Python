@@ -1,0 +1,104 @@
+
+Code
+import pandas as pd 
+import numpy as np
+import  matplotlib.pyplot as plt
+import  os
+os.chdirr
+import dataset
+df.shape
+df = pd.read_csv('C:/Users/HOME/Documents/diabetes.csv')
+df.shape
+(768, 9)
+df.head()
+Pregnancies	Glucose	BloodPressure	SkinThickness	Insulin	BMI	DiabetesPedigreeFunction	Age	Outcome
+0	6	148	72	35	0	33.6	0.627	50	1
+1	1	85	66	29	0	26.6	0.351	31	0
+2	8	183	64	0	0	23.3	0.672	32	1
+3	1	89	66	23	94	28.1	0.167	21	0
+4	0	137	40	35	168	43.1	2.288	33	1
+df.info()
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 768 entries, 0 to 767
+Data columns (total 9 columns):
+ #   Column                    Non-Null Count  Dtype  
+---  ------                    --------------  -----  
+ 0   Pregnancies               768 non-null    int64  
+ 1   Glucose                   768 non-null    int64  
+ 2   BloodPressure             768 non-null    int64  
+ 3   SkinThickness             768 non-null    int64  
+ 4   Insulin                   768 non-null    int64  
+ 5   BMI                       768 non-null    float64
+ 6   DiabetesPedigreeFunction  768 non-null    float64
+ 7   Age                       768 non-null    int64  
+ 8   Outcome                   768 non-null    int64  
+dtypes: float64(2), int64(7)
+memory usage: 54.1 KB
+df.corr().T
+Pregnancies	Glucose	BloodPressure	SkinThickness	Insulin	BMI	DiabetesPedigreeFunction	Age	Outcome
+Pregnancies	1.000000	0.129459	0.141282	-0.081672	-0.073535	0.017683	-0.033523	0.544341	0.221898
+Glucose	0.129459	1.000000	0.152590	0.057328	0.331357	0.221071	0.137337	0.263514	0.466581
+BloodPressure	0.141282	0.152590	1.000000	0.207371	0.088933	0.281805	0.041265	0.239528	0.065068
+SkinThickness	-0.081672	0.057328	0.207371	1.000000	0.436783	0.392573	0.183928	-0.113970	0.074752
+Insulin	-0.073535	0.331357	0.088933	0.436783	1.000000	0.197859	0.185071	-0.042163	0.130548
+BMI	0.017683	0.221071	0.281805	0.392573	0.197859	1.000000	0.140647	0.036242	0.292695
+DiabetesPedigreeFunction	-0.033523	0.137337	0.041265	0.183928	0.185071	0.140647	1.000000	0.033561	0.173844
+Age	0.544341	0.263514	0.239528	-0.113970	-0.042163	0.036242	0.033561	1.000000	0.238356
+Outcome	0.221898	0.466581	0.065068	0.074752	0.130548	0.292695	0.173844	0.238356	1.000000
+import classifier
+.neural_network import  MLPClassifier
+import sklearn
+from sklearn.neural_network import  MLPClassifier
+x=df[["Glucose"]]
+y=df[["Outcome"]]
+Divide dataset into train and test dataset
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split
+ 
+x_train,x_test,y_train,y_test = train_test_split(x,y, test_size=0.3)
+x_train.shape
+x_train.shape
+(537, 1)
+y_train.shape
+y_train.shape
+(537, 1)
+Initialize the classifier
+clf = MLPClassifier(hidden_layer_sizes=(51),solver="lbfgs", alpha=1e-5)
+Fit the data
+clf.fit(x,y)
+C:\ProgramData\Anaconda3\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:1109: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+MLPClassifier(alpha=1e-05, hidden_layer_sizes=51, solver='lbfgs')
+x_train
+y_pred=clf.predict(x_train)
+Check accuracy score as well as confusion matrix
+y_train,y_pred
+from sklearn.metrics import accuracy_score
+print(accuracy_score(y_train,y_pred))
+0.7337057728119181
+train,y_pred
+from sklearn.metrics import classification_report
+print(classification_report(y_train,y_pred))
+              precision    recall  f1-score   support
+
+           0       0.75      0.87      0.81       340
+           1       0.69      0.50      0.58       197
+
+    accuracy                           0.73       537
+   macro avg       0.72      0.68      0.69       537
+weighted avg       0.73      0.73      0.72       537
+
+a
+from sklearn.metrics import confusion_matrix
+print(confusion_matrix(y_train,y_pred))
+[[296  44]
+ [ 99  98]]
+110
+a = clf.predict(([[110]]))
+C:\ProgramData\Anaconda3\lib\site-packages\sklearn\base.py:450: UserWarning: X does not have valid feature names, but MLPClassifier was fitted with feature names
+  warnings.warn(
+if a==0:
+    print("You are diabetic free")
+else:
+    print("You have diabetes, concern to doctor")
+You are diabetic free
